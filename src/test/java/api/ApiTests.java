@@ -5,15 +5,10 @@ import configs.Config;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
-import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.UpperCase;
-import org.junit.runner.Runner;
 
 import java.util.List;
 
@@ -101,11 +96,12 @@ public class ApiTests extends Config {
     @Test
     @DisplayName("RandomUserApi - Получение >5000 пользователей")
     public void getRandomUsersOverLimit() {
+        int resultsQuantity = 10000;
         //При привышении лимита сервер возвращает 1 пользователя
         List<RandomUserPojo> users = given()
                 .when()
                 .contentType(ContentType.JSON)
-                .queryParam("results", 10000)
+                .queryParam("results", resultsQuantity)
                 .get(RANDOM_USER)
                 .then()
                 .statusCode(200)
@@ -116,16 +112,16 @@ public class ApiTests extends Config {
     @Test
     @DisplayName("RandomUserApi - Получение 5000 пользователей")
     public void getMaximumRandomUsers() {
-        int resultQuantity = 5000;
+        int resultsQuantity = 5000;
         List<RandomUserPojo> users = given()
                 .when()
                 .contentType(ContentType.JSON)
-                .queryParam("results", resultQuantity)
+                .queryParam("results", resultsQuantity)
                 .get(RANDOM_USER)
                 .then()
                 .statusCode(200)
                 .extract().body().jsonPath().getList("results", RandomUserPojo.class);
-        Assertions.assertThat(users.size()).isEqualTo(resultQuantity);
+        Assertions.assertThat(users.size()).isEqualTo(resultsQuantity);
     }
 
     @Test
@@ -145,11 +141,13 @@ public class ApiTests extends Config {
     @Test
     @DisplayName("RandomUserApi - Путь к фото профиля соответствует полу юзера")
     public void checkMatchGenderAndPictureEndpoint() {
+        String gender = "female";
+        int resultsQuantity = 1;
         List<RandomUserPojo> users = given()
                 .when()
                 .contentType(ContentType.JSON)
-                .queryParam("gender", "female")
-                .queryParam("results", 1)
+                .queryParam("gender", gender)
+                .queryParam("results", resultsQuantity)
                 .get(RANDOM_USER)
                 .then()
                 .statusCode(200)
@@ -160,10 +158,11 @@ public class ApiTests extends Config {
     @Test
     @DisplayName("RandomUserApi - Email заканчивается на @example.com")
     public void checkEmailEndsWith() {
+        int resultsQuantity = 100;
         List<RandomUserPojo> users = given()
                 .when()
                 .contentType(ContentType.JSON)
-                .queryParam("results", 100)
+                .queryParam("results", resultsQuantity)
                 .get(RANDOM_USER)
                 .then()
                 .statusCode(200)
@@ -174,11 +173,13 @@ public class ApiTests extends Config {
     @Test
     @DisplayName("RandomUserApi - Один и тот же user при использовании seed")
     public void getUserBySeed() {
+        String seed = "test";
+        int resultsQuantity = 1;
         List<RandomUserPojo> users = given()
                 .when()
                 .contentType(ContentType.JSON)
-                .queryParam("seed", "test")
-                .queryParam("results", 1)
+                .queryParam("seed", seed)
+                .queryParam("results", resultsQuantity)
                 .get(RANDOM_USER)
                 .then()
                 .statusCode(200)
