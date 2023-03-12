@@ -187,4 +187,19 @@ public class ApiTests extends Config {
         Assertions.assertThat(users.get(0).getFirst()).isEqualTo("Areta");
         Assertions.assertThat(users.get(0).getLast()).isEqualTo("Araújo");
     }
+
+    @Test
+    @DisplayName("RandomUserApi - Проверка зависимости адреса и национальности пользователя")
+    public void checkMatchingNationalityAndAddress() {
+        String nationality = "DE";
+        List<RandomUserPojo> users = given()
+                .when()
+                .contentType(ContentType.JSON)
+                .queryParam("nat", nationality)
+                .get(RANDOM_USER)
+                .then()
+                .statusCode(200)
+                .extract().body().jsonPath().getList("results.location", RandomUserPojo.class);
+        assertTrue(users.stream().allMatch(x -> x.getCountry().equals("Germany")));
+    }
 }

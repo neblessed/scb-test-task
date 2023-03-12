@@ -11,5 +11,6 @@ public class RandomUserPojo {
     private String email;
     private String password;
     private String thumbnail;
+    private String country;
 }
 
