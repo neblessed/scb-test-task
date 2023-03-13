@@ -1,6 +1,6 @@
 package api;
 
-import configs.Config;
+import config.Config;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Execution;
@@ -9,7 +9,9 @@ import org.junit.jupiter.api.parallel.ExecutionMode;
 import static io.restassured.RestAssured.given;
 
 
-//Создал для теста CleanURL. В доке написано 'Limit 2 requests per second'
+//Создал для теста CleanURL, не успел доделать.
+// В доке написано 'Limit 2 requests per second'
+
 @Execution(ExecutionMode.CONCURRENT)
 public class ParallelApiTest extends Config {
 

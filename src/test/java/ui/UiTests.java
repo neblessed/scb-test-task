@@ -1,7 +1,7 @@
 package ui;
 
 import com.codeborne.selenide.ElementsCollection;
-import configs.Config;
+import config.Config;
 import org.assertj.core.api.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

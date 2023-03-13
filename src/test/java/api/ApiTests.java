@@ -1,7 +1,7 @@
 package api;
 
 import api.pojo.RandomUserPojo;
-import configs.Config;
+import config.Config;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
@@ -13,7 +13,6 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
